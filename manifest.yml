@@ -1,0 +1,17 @@
+applications:
+- name: springboot-sample
+  path: target/demo-cloudfoudry-0.0.1-SNAPSHOT.jar
+  buildpacks:
+  - https://github.com/cloudfoundry/java-buildpack.git
+  timeout: 120
+  disk_quota: 1G
+  instances: 1
+  memory: 512M
+  env:
+    JAVA_OPTS: '-XX:ReservedCodeCacheSize=32M -XX:MaxDirectMemorySize=32M'
+    JBP_CONFIG_OPEN_JDK_JRE: '[memory_calculator: {stack_threads: 30}]'   
+  routes:
+  - route: springboot-sample.cfapps.io
+  services:
+  - springboot-sample-db
+  stack: cflinuxfs3
